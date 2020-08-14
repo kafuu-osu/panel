@@ -644,8 +644,12 @@ def NoPerm(session):
     else:
         return redirect("/login")
 
-if __name__ == "__main__":
+
+with app.app_context():
     Thread(target=PlayerCountCollection, args=(True,)).start()
     UpdateCachedStore()
+
+
+if __name__ == "__main__":
     app.run(host= '0.0.0.0', port=UserConfig["Port"])
     handleUpdate() # handle update...
