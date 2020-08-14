@@ -16,6 +16,10 @@ import os
 from changelogs import Changelogs
 import timeago
 
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
+
 init() #initialises colourama for colours
 Changelogs.reverse()
 
@@ -627,7 +631,7 @@ def ApplySystemSettings(DataArray, Session):
 
 def IsOnline(AccountId: int):
     """Checks if given user is online."""
-    Online = requests.get(url=f"{UserConfig['BanchoURL']}api/v1/isOnline?id={AccountId}").json()
+    Online = requests.get(url=f"{UserConfig['BanchoURL']}api/v1/isOnline?id={AccountId}", verify=False).json()
     if Online["status"] == 200:
         return Online["result"]
     else:
@@ -635,12 +639,12 @@ def IsOnline(AccountId: int):
 
 def CalcPP(BmapID):
     """Sends request to letsapi to calc PP for beatmap id."""
-    reqjson = requests.get(url=f"{UserConfig['LetsAPI']}v1/pp?b={BmapID}").json()
+    reqjson = requests.get(url=f"{UserConfig['LetsAPI']}v1/pp?b={BmapID}", verify=False).json()
     return round(reqjson["pp"][0], 2)
 
 def CalcPPDT(BmapID):
     """Sends request to letsapi to calc PP for beatmap id with the double time mod."""
-    reqjson = requests.get(url=f"{UserConfig['LetsAPI']}v1/pp?b={BmapID}&m=64").json()
+    reqjson = requests.get(url=f"{UserConfig['LetsAPI']}v1/pp?b={BmapID}&m=64", verify=False).json()
     return round(reqjson["pp"][0], 2)
 
 def Unique(Alist):
