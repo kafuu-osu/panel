@@ -19,7 +19,7 @@ threads = 4
 worker_class = 'gevent'
 
 # Background process (daemon)?
-daemon = False
+daemon = True
 
 
 loglevel = 'info'
